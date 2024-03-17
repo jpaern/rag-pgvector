@@ -1,7 +1,7 @@
 services:
   db:
     hostname: db
-    image: aie/pgvector:latest
+    image: juri/pgvector:16.2
     ports:
       - 5432:5432
     restart: always
@@ -9,6 +9,6 @@ services:
       - POSTGRES_DB=vectordb
       - POSTGRES_USER=testuser
       - POSTGRES_PASSWORD=testpwd
-      - POSTGRES_HOST_AUTH_METHOD=trust
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      #  - POSTGRES_HOST_AUTH_METHOD=trust
+    #volumes:
+    #  - ./init.sql:/docker-entrypoint-initdb.d/init.sql

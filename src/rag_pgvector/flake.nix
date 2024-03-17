@@ -1,6 +1,7 @@
 {
   description = "Template for nix flakes.";
-  nixConfig.bash-prompt = "[nix (my-project)] ";
+  # nixConfig.bash-prompt = "[nix (my-project)] ";
+  nixConfig.bash-prompt-prefix = "(venv)";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     flake-utils.url = "github:numtide/flake-utils";
@@ -19,7 +20,7 @@
             diff-so-fancy
             lazygit
             openssl
-            python310
+            python311
             postgresql_16
           ];
 
@@ -27,6 +28,7 @@
             alias ls=eza
             alias ll="ls -l"
             set -o vi
+            export PS1="$VIRTUAL_ENV_PROMPT$PS1"
           '';
         };
       });

@@ -38,6 +38,7 @@ def get_url():
         username="testuser",
         host="localhost",
         database="vectordb",
+        password="testpwd",
     )
     return url
 
@@ -46,7 +47,7 @@ def activate_pgvector_extension(session):
     session.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
 
 
-def read_openai_token(filename: str = "auth_token.txt") -> str:
+def read_openai_token(filename: str = ".openai.key") -> str:
     with open(filename, "r") as f:
         token = f.read().strip()
 
@@ -89,8 +90,9 @@ if __name__ == "__main__":
     logger.info(f"engine: {engine}")
     with Session(engine) as session:
         activate_pgvector_extension(session)
+        session.commit()
     metadata = MetaData()
-    metadata.create_all(engine)
+    Base.metadata.create_all(engine)
     with Session(engine) as session:
         for e, t in zip(embeddings, texts):
             emb = Embeddings(embedding=e, text=t)
